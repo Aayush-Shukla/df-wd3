@@ -1,0 +1,46 @@
+<!doctype html>
+<html class="grey lighten-2" lang="" style="height: 100%;">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Just Another App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Latest compiled and minified CSS -->
+<!--        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="./css/style.css"
+
+
+    </head>
+    <body >
+
+
+
+            <div id="menu-nav">
+                <div id="navigation-bar">
+
+
+                    <ul class="nav">
+
+                        {{#if isAuthenticated}}
+                        <li><a href="/search"><i class="material-icons">search</i> </a></li>
+                        <li><a href="/profile">Profile</a></li>
+
+                        <li><a href="/logout">Logout</a></li>
+
+
+                        {{else}}
+
+
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/register">Register</a></li>
+                        {{/if}}
+
+                    </ul>
+                </div>
+            </div>
+
+
+
+

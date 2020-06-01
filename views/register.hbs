@@ -1,0 +1,107 @@
+{{> header }}
+
+
+
+<div class="container "  style="height: 100%;">
+
+<br>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
+
+<!--<div class="row ">-->
+<!--    <div class="col s12 m6 offset-m3  ">-->
+<!--        <div class="card grey lighten-3">-->
+<!--            <div class="card-content red-text">-->
+<!--                <span class="card-title"><h5>REGISTER</h5></span>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                <div class="">-->
+<!--                    <form method="POST" action='/register'>-->
+<!--                        <div class="input-field s12 ">-->
+<!--                            <label for="username" class="black-text">Username</label>-->
+<!--                            <input type="text" name="username" class="validate" id="username" placeholder="Enter username" required autocomplete="off">-->
+
+<!--                        </div>-->
+<!--                        <div class="input-field s12 ">-->
+<!--                            <label for="email" class="black-text">Email</label>-->
+<!--                            <input type="email" name="email" class="validate" id="email" placeholder="Enter Email" required autocomplete="off">-->
+
+<!--                        </div>-->
+
+<!--                        <div class="input-field  ">-->
+<!--                            <label for="Password" class="black-text">Password</label>-->
+<!--                            <input type="password" name="password" class="validate" id="Password" placeholder="Password" required autocomplete="off">-->
+<!--                        </div>-->
+
+<!--                        <button type="submit" class="btn teal lighten-1">Submit</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--            <div class="card-action">-->
+<!--                <div class="left-align red-text">-->
+<!--                    <a href="/login"  > Already a user?</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->
+
+
+
+
+<div class="register">
+    {{#if errors}}
+
+        <div class="row">
+
+            <div class="card-panel red lighten-2 s12 m6 offset-m3 col">
+        <span class="white-text">{{errors}}
+        </span>
+            </div>
+
+        </div>
+        <br>
+        <br>
+
+
+    {{/if}}
+    <h1>REGISTER</h1>
+    <form method="POST" action="/register">
+        <p>
+            <input type="text" name="username" class="validate" id="username" placeholder="Enter username" required autocomplete="off">
+
+        </p>
+        <p>
+            <input type="email" name="email" class="validate" id="email" placeholder="Enter Email" required autocomplete="off">
+
+        </p>
+ <p>
+     <input type="password" name="password" class="validate" id="Password" placeholder="Password" required autocomplete="off">
+
+
+ </p>
+
+        <p class="submit"><input type="submit" name="commit" value="Register"></p>
+    </form>
+</div>
+
+<div class="register-help">
+    <p> <a href="/login"> Already a user ?</a>.</p>
+</div>
+
+
+
+{{> footer-end }}

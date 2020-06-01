@@ -1,0 +1,98 @@
+{{> header }}
+
+
+
+
+
+
+
+
+{{#if errors}}
+    {{#each errors}}
+<div class="row">
+
+        <div class="card-panel red">
+        <span class="white-text">{{this.msg}}
+        </span>
+        </div>
+
+</div>
+
+    {{/each}}
+{{/if}}
+
+
+
+
+
+<br>
+<br>
+<br>
+
+
+<!--    <div class="row ">-->
+<!--        <div class="col s12 m6 offset-m3  ">-->
+<!--            <div class="card grey lighten-3">-->
+<!--                <div class="card-content red-text">-->
+<!--                    <span class="card-title"><h5>LOGIN</h5></span>-->
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                    <br>-->
+<!--                    <div class="">-->
+<!--                        <form method="POST" action='/login'>-->
+<!--                        <div class="input-field s12 ">-->
+<!--                            <label for="username" class="black-text">Username</label>-->
+<!--                            <input type="text" name="username" class="validate" id="username" placeholder="Enter username" required autocomplete="off">-->
+
+<!--                        </div>-->
+
+<!--                        <div class="input-field  ">-->
+<!--                            <label for="exampleInputPassword1" class="black-text">Password</label>-->
+<!--                            <input type="password" name="password" class="validate" id="exampleInputPassword1" placeholder="Password" required required autocomplete="off">-->
+<!--                        </div>-->
+
+<!--                        <button type="submit" class="btn teal lighten-1">Submit</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+
+<!--            </div>-->
+<!--                <div class="card-action">-->
+<!--                    <div class="left-align red-text">-->
+<!--                    <a href="/register"  > Not a user?</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+<div class="login">
+    <h1>Login</h1>
+    <form method="POST" action="/login">
+        <p>                            <input type="text" name="username" class="validate" id="username" placeholder="Enter username" required autocomplete="off">
+        </p>
+        <p>                            <input type="password" name="password" class="validate" id="exampleInputPassword1" placeholder="Password" required required autocomplete="off">
+        </p>
+
+        <p class="submit"><input type="submit" name="commit" value="Login"></p>
+    </form>
+</div>
+
+<div class="login-help">
+    <p> <a href="/register"> Not a user ?</a>.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+{{> footer-end }}

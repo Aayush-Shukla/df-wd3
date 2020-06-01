@@ -1,0 +1,39 @@
+{{> header }}
+
+<div class="container "  style="height: 100%;">
+<div class="row">
+    <form class="form-content col s12" method="POST" action="/create">
+        <div class="row">
+            <div class=" ">
+                <label for="heading">Heading:</label>
+                <input name="heading">
+                <label for="textarea1">Content:</label>
+
+                <textarea id="textarea1"  name="content"></textarea>
+                <label for="footer">Footer:</label>
+                <input name="footer">
+
+
+                {{#each names}}
+    <input type="checkbox" name="check" value="{{this.id}}" checked>
+    {{this.name}}
+    {{/each}}
+
+
+                <br>
+                <br>
+                <br>
+                <button  type="submit" name="action">POST INVITATION
+                    <i class="material-icons right">send</i>
+                </button>
+
+            </div>
+        </div>
+    </form>
+</div>
+</div>
+
+
+
+
+{{> footer-end }}
