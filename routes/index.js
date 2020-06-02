@@ -15,7 +15,7 @@ router.get('/',authenticationMiddleware (), function(req, res, next) {
     // console.log(req.cookies,req.session,"helllooooooooooooooooooo")
 
     const db=require('../db.js')
-    db.query("select heading,content,footer,created_at from invites where author_id=(?)", [profileid], function (error, results, fields) {
+    db.query("select heading,content,footer,created_at from invites where author_id=(?) ORDER BY created_at DESC", [profileid], function (error, results, fields) {
         if (error) {
             console.log(error, 'dbquery');
         }
@@ -114,7 +114,7 @@ router.post('/create',authenticationMiddleware (), function(req, res, next) {
 
 
         })
-        res.redirect('/create')
+        res.redirect('/')
 
 
 
@@ -169,7 +169,7 @@ router.get('/accept/:id',authenticationMiddleware (), function(req, res, next) {
         // console.log(profileid[0].id)
 
 
-            res.redirect('/create')
+            res.redirect('/')
 
 
     })
@@ -192,7 +192,7 @@ router.get('/reject/:id',authenticationMiddleware (), function(req, res, next) {
         // console.log(profileid[0].id)
 
 
-            res.redirect('/create')
+            res.redirect('/')
 
 
     })

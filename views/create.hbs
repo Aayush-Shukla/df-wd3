@@ -1,36 +1,58 @@
 {{> header }}
 
-<div class="container "  style="height: 100%;">
-<div class="row">
+<div class="content"  style="height: 100%;">
+    <div class="create">
+
+
     <form class="form-content col s12" method="POST" action="/create">
-        <div class="row">
-            <div class=" ">
-                <label for="heading">Heading:</label>
-                <input name="heading">
-                <label for="textarea1">Content:</label>
 
-                <textarea id="textarea1"  name="content"></textarea>
+            <div class="card ">
+                <div class="row">
+                    <h1><u> Create Invite</u></h1>
+                </div>
+                <div class="row">
+                <label for="heading">Header:</label>
+                    <br>
+
+                <input name="heading" class="box" required>
+                </div>
+                <div class="row">
+                <label for="textarea1">Body:</label>
+                    <br>
+
+                <textarea id="textarea1" class="box"  name="content" required></textarea>
+                </div>
+
+                <div class="row">
                 <label for="footer">Footer:</label>
-                <input name="footer">
+                    <br>
 
-
-                {{#each names}}
-    <input type="checkbox" name="check" value="{{this.id}}" checked>
+                    <textarea name="footer" class="box footer" required></textarea>
+                </div>
+                <div class="row">
+                    <label for="custom-invite">Invite all: </label>
+                    <input onchange="show()" type="checkbox" id="custom-invite" name="custom-invite" checked>
+                </div>
+<div class="row custom-invite">                    <label for="check">Select users to invite: </label>
+<div class="row">
+    {{#each names}}
+    <input type="checkbox" class='users-invited' name="check" value="{{this.id}}" checked >
     {{this.name}}
+        <br>
     {{/each}}
-
-
-                <br>
-                <br>
-                <br>
-                <button  type="submit" name="action">POST INVITATION
-                    <i class="material-icons right">send</i>
-                </button>
-
-            </div>
-        </div>
-    </form>
 </div>
+</div>
+
+
+                <div class="row">
+                <button  type="submit" name="action">POST INVITATION
+
+                </button>
+                </div>
+            </div>
+
+    </form>
+    </div>
 </div>
 
 

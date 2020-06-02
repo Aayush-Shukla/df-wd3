@@ -2,19 +2,38 @@
 
 
 
-{{invite.author_id}}
-{{invite.created_at}}
-{{invite.heading}}
-{{invite.content}}
-{{invite.footer}}
+<div class="content">
+
+<div class="card">
+    <div class="card-content">
+
+        <div class="card-info">
+            {{invite.author_id}}
+            {{invite.created_at}}
+        </div>
+        <h1 class="center">
+            {{invite.heading}}
+        </h1>
+        <div class="invite-content center">
+            {{invite.content}}
+        </div>
+        <div class="card-foot">
+            {{invite.footer}}
+        </div>
+        <hr>
+        <div class="card-footer" style="text-align: right">
+        <a href=/accept/{{invite.invite_id}}>Accept</a>
+            &nbsp
+            &nbsp
+            &nbsp
+        <a href=/reject/{{invite.invite_id}}>Reject</a>
+        </div>
+
+    </div>
+</div>
 
 
-
-<a href=/accept/{{invite.invite_id}}>Accept</a>
-<a href=/reject/{{invite.invite_id}}>Reject</a>
-
-
-
+</div>
 
 
 

@@ -51,7 +51,7 @@ ul.nav li.current a {
 body {
   font: 13px/20px "Lucida Grande", Tahoma, Verdana, sans-serif;
   color: #404040;
-  background: #0ca3d2;
+  background: lightgrey;
 }
 
 .login {
@@ -199,6 +199,116 @@ body {
 
 .register input[type=text], .register input[type=password], .register input[type=email]{
   width: 278px;
+}
+
+
+.content{
+  width:60%;
+  position:absolute;
+  left:20%;
+  /*border-style: solid;*/
+  /*border-color: black;*/
+  /*border-width: 4px;*/
+}
+.create{
+  display: block;
+  position: relative ; align-items: ;
+  align-content : center;
+  margin-top:auto;
+  margin-bottom:auto;
+  align-items: center;
+  padding-top: 40px;
+
+
+
+}
+
+
+.row{
+  width: 100%;
+  padding: 50px;
+  width: 8em
+
+  margin-left: auto;
+  margin-right: auto;
+
+}
+.card{
+  /*border-style: solid;*/
+  /*border-color: black;*/
+  /*border-width: 4px;*/
+  position: relative;
+  margin: 0.5rem;
+  background-color: white;
+  border-radius: 5px;
+  min-height: 500px;
+  display: block;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+
+
+
+
+}
+.card-foot{
+  border-radius: 0 0 2px 2px;
+  border-top: 1px solid rgba(160,160,160,0.2);
+  position:relative;
+  padding: 16px 24px;
+
+}
+textarea {
+  resize: none;
+  height:300px;
+
+
+}
+.center{
+  text-align: center;
+}
+.footer{
+  height: 40px;
+}
+.right{
+ display: block;
+  position: absolute;
+  right: 20px;
+}
+
+.custom-invite{
+  display: none;
+}.card .box{
+  margin:20px;
+  position:relative;
+  left:40px;
+   width:70%;
+ }
+
+.card-info{
+  border-radius: 0 0 2px 2px;
+  border-bottom: 1px solid rgba(160,160,160,0.2);
+  position:relative;
+  padding: 16px 24px;
+  min-height: 30px;
+
+}
+
+.card-content{
+  padding: 20px;
+  border-radius: 0 0 2px 2px;
+  display: block;
+  font-size:15px;
+}
+
+.invite-content{
+  padding: 50px 30px;
+
+  position: relative;
+  border-radius: 0 0 2px 2px;
+  /*display: block;*/
+  font-size:15px;
+  min-height: 250px;
 }
 
 .register p.remember_me {
