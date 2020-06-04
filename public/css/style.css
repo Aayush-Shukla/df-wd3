@@ -1,6 +1,7 @@
 ul.nav {
   margin:0;
   padding:0;
+  width: 100%;
   list-style:none;
   height:36px; line-height:36px;
   background:#0d7963; /* you can change the backgorund color here. */
@@ -17,10 +18,7 @@ ul.nav a {
   color:#ccece6;
   text-decoration:none;
 }
-ul.nav a:hover,
-ul.nav li.current a {
-  background:#086754;
-}
+
 
 
 
@@ -52,6 +50,7 @@ body {
   font: 13px/20px "Lucida Grande", Tahoma, Verdana, sans-serif;
   color: #404040;
   background: lightgrey;
+  width: 100%;
 }
 
 .login {
@@ -202,6 +201,17 @@ body {
 }
 
 
+.avail{
+  margin-top: 2.18in;
+  width:18%;
+  position:absolute;
+  right:1%;
+  background-color: white;
+  border-radius: 5px;
+  min-height: 500px;
+  display: block;
+}
+
 .content{
   width:60%;
   position:absolute;
@@ -264,6 +274,10 @@ textarea {
 
 
 }
+.accepted{
+
+  background-color: #def2de;
+}
 .center{
   text-align: center;
 }
@@ -307,8 +321,11 @@ textarea {
   position: relative;
   border-radius: 0 0 2px 2px;
   /*display: block;*/
-  font-size:15px;
+  font-size:25px;
   min-height: 250px;
+}
+.card-foot{font-size: 19px;
+  min-height: 80px;
 }
 
 .register p.remember_me {

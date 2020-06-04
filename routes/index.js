@@ -15,22 +15,28 @@ router.get('/',authenticationMiddleware (), function(req, res, next) {
     // console.log(req.cookies,req.session,"helllooooooooooooooooooo")
 
     const db=require('../db.js')
-    db.query("select heading,content,footer,created_at from invites where author_id=(?) ORDER BY created_at DESC", [profileid], function (error, results, fields) {
+    db.query("select invites.invite_id,(select count(invite_id) from accepted where accepted.invite_id=invites.invite_id and bool=TRUE) as count,heading,content,footer,created_at from invites where author_id=(?) AND event_at > NOW() ORDER BY created_at DESC", [profileid], function (error, results, fields) {
         if (error) {
             console.log(error, 'dbquery');
         }
 
 
-        db.query("SELECT heading,content,footer,created_at,author_id FROM invites join accepted on invites.invite_id=accepted.invite_id where user=(?) AND bool=TRUE", [profileid], function (error, accepted, fields) {
+        db.query("SELECT name, heading,content,footer,event_at,author_id FROM invites inner join accepted on invites.invite_id=accepted.invite_id inner join users on invites.author_id=users.id where user=(?) AND bool=TRUE AND event_at > NOW() ", [profileid], function (error, accepted, fields) {
             if (error) {
                 console.log(error, 'dbquery');
             }
 
+            db.query("SELECT substring(heading,1,25) as heading,link FROM invites where eligiblemem LIKE '%\"?\"%' AND event_at > NOW() AND author_id !=(?)",[profileid,profileid], function (error, available, fields) {
+                if (error) {
+                    console.log(error, 'dbquery');
+                }
 
-            console.log(results)
-            res.render('home',{data:{created:results, accepted:accepted}});
-        })
+console.log(accepted)
 
+                res.render('home', {data: {created: results, accepted: accepted,available:available}});
+
+            })
+    })
     })
 
 
@@ -94,27 +100,35 @@ router.get('/profile',authenticationMiddleware (), function(req, res, next) {
 router.post('/create',authenticationMiddleware (), function(req, res, next) {
 
 
-
+    time=req.body.eventtime
     heading=req.body.heading
     content=req.body.content
     footer=req.body.footer
     authorid=req.session.user
+
     members=JSON.stringify(req.body.check)
     link=Math.random().toString(36).substring(2,7)
-    console.log(JSON.stringify(req.body.check),Math.random().toString(36).substring(2,7),'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
+    console.log(time,'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
 
     const db=require('../db.js')
 
-        db.query("INSERT INTO invites(author_id,heading,content,footer,eligiblemem,link)VALUES(?,?,?,?,?,?)", [authorid, heading,content,footer,members,link], function (error, results, fields) {
+        db.query("INSERT INTO invites(author_id,heading,content,footer,eligiblemem,link,event_at)VALUES(?,?,?,?,?,?,?)", [authorid, heading,content,footer,members,link,time], function (error, results, fields) {
             if (error) {
                 console.log(error,'dbquery');
             }
             console.log("success")
+            db.query("SELECT LAST_INSERT_ID() as user_id",  function (error, last, fields) {
+                if (error) {
+                    console.log(error,'dbquery');
+                }
+                console.log(last)
+
+                res.render('link',{last:last})
 
 
 
-        })
-        res.redirect('/')
+
+            })})
 
 
 
@@ -136,13 +150,13 @@ router.get('/invite/:link',authenticationMiddleware (), function(req, res, next)
     currentuser=req.session.user
 
     const db=require('../db.js')
-    db.query("SELECT * FROM invites WHERE link =(?) ", [invitelink], function (error,results, fields) {
+    db.query("SELECT * FROM invites join users on invites.author_id=users.id WHERE link =(?) ", [invitelink], function (error,results, fields) {
         if (error) {
             console.log(error, 'dbquery');
         }
         // console.log(profileid[0].id)
-        if(results.length!=0) {
-            console.log(results)
+        if(results.length!=0 && strtoarr(currentuser,results[0].eligiblemem) ) {
+            console.log(results,"sds")
             res.render('invite',{invite:results[0]})
         }
         else{
@@ -150,6 +164,23 @@ router.get('/invite/:link',authenticationMiddleware (), function(req, res, next)
         }
 
     })
+
+
+    function strtoarr(num,s) {
+        n=num.toString()
+        var a=JSON.parse(s)
+        // console.log(n,a[0])
+        var i;
+        for (i = 0; i < a.length; i++) {
+            if (a[i] === n) {
+                return true;
+            }
+        }
+
+        return false;
+
+
+    }
 
 });
 
@@ -159,17 +190,38 @@ router.get('/accept/:id',authenticationMiddleware (), function(req, res, next) {
 
     inviteid=req.params.id
     currentuser=req.session.user
-    boolean=true
+    boolean=true;
 
     const db=require('../db.js')
-    db.query("INSERT INTO accepted(invite_id,user,bool)VALUES (?,?,?) ON DUPLICATE KEY UPDATE `bool` = (?) ", [inviteid,currentuser,boolean,boolean], function (error,results, fields) {
+
+    db.query("SELECT * FROM accepted WHERE invite_id=(?) AND user=(?)", [inviteid,currentuser], function (error,checkdup, fields) {
         if (error) {
             console.log(error, 'dbquery');
         }
         // console.log(profileid[0].id)
+        if(checkdup.length!=0){
+
+            db.query("UPDATE accepted SET bool=(?) where invite_id=(?) AND user=(?) ", [boolean,inviteid,currentuser], function (error,results, fields) {
+                if (error) {
+                    console.log(error, 'dbquery');
+                }
+                res.redirect('/')
+
+            })
+            // console.log(profileid[0].id)
+        }
+        else{
+            db.query("INSERT INTO accepted(invite_id,user,bool)VALUES (?,?,?) ", [inviteid,currentuser,boolean], function (error,results, fields) {
+                if (error) {
+                    console.log(error, 'dbquery');
+                }
+                res.redirect('/')
+
+            })
+
+        }
 
 
-            res.redirect('/')
 
 
     })
@@ -185,14 +237,40 @@ router.get('/reject/:id',authenticationMiddleware (), function(req, res, next) {
     boolean=false
 
     const db=require('../db.js')
-    db.query("INSERT INTO accepted(invite_id,user,bool)VALUES (?,?,?) ON DUPLICATE KEY UPDATE `bool` = (?) ", [inviteid,currentuser,boolean,boolean], function (error,results, fields) {
+    db.query("SELECT * FROM accepted WHERE invite_id=(?) AND user=(?)", [inviteid,currentuser], function (error,checkdup, fields) {
         if (error) {
             console.log(error, 'dbquery');
         }
         // console.log(profileid[0].id)
 
 
-            res.redirect('/')
+
+
+        if(checkdup.length!=0){
+
+
+            db.query("UPDATE accepted SET bool=(?) where invite_id=(?) AND user=(?) ", [boolean,inviteid,currentuser], function (error,results, fields) {
+                if (error) {
+                    console.log(error, 'dbquery');
+                }
+                res.redirect('/')
+                // console.log(profileid[0].id)
+
+            })
+        }
+        else{
+            db.query("INSERT INTO accepted(invite_id,user,bool)VALUES (?,?,?) ", [inviteid,currentuser,boolean], function (error,results, fields) {
+                if (error) {
+                    console.log(error, 'dbquery');
+                }
+                res.redirect('/')
+
+            })
+
+        }
+
+
+
 
 
     })

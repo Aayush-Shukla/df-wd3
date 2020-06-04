@@ -8,10 +8,16 @@
     <div class="card-content">
 
         <div class="card-info">
-            {{invite.author_id}}
-            {{invite.created_at}}
+            <h2>HOSTED BY:            <u>    {{invite.name}}</u>
+            </h2>
+            <small style="position: absolute;right: 0px;">
+                <strong>EVENT AT:&nbsp </strong>{{invite.event_at}}</small>
+            <br>
+        </div>
         </div>
         <h1 class="center">
+            <br>
+            <br>
             {{invite.heading}}
         </h1>
         <div class="invite-content center">
@@ -21,12 +27,13 @@
             {{invite.footer}}
         </div>
         <hr>
-        <div class="card-footer" style="text-align: right">
-        <a href=/accept/{{invite.invite_id}}>Accept</a>
+        <div class="card-footer" style="text-align: right;padding-bottom: 5px;">
+        <button onclick=window.location.href='/accept/{{invite.invite_id}}' style="background-color: #0d7963">Accept</button>
             &nbsp
             &nbsp
             &nbsp
-        <a href=/reject/{{invite.invite_id}}>Reject</a>
+        <button onclick=window.location.href='/reject/{{invite.invite_id}}' style="background-color: lightcoral;">Reject</button>
+            &nbsp
         </div>
 
     </div>

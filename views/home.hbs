@@ -6,7 +6,7 @@
 
 
 
-<div class="card-panel black-text row s12" style="  padding-bottom: 150px;box-shadow: 0px 0px 0px 0px rgba(0,0,0,0); background-image: url(https://img.freepik.com/free-vector/seamless-pattern_1159-5086.jpg?size=626&ext=jpg);">
+<div class="card-panel black-text row s12" style=" width:93.5%; padding-bottom: 150px;box-shadow: 0px 0px 0px 0px rgba(0,0,0,0); background-image: url(https://img.freepik.com/free-vector/seamless-pattern_1159-5086.jpg?size=626&ext=jpg);">
     <div class="container">
         <h1>Hello, <text class="red-text">{{data.name}}</text></h1>
 
@@ -14,20 +14,40 @@
 
 </div>
 
+
+
+
+
+<div class=" avail">
+    <div class="card-info">
+        <h3>Available Events</h3>
+    </div>
+    <ul>
+{{#each data.available}}
+    <li><a href="/invite/{{this.link}}" >{{this.heading}}  </a>  ...</li>
+
+
+{{/each}}
+    </ul>
+
+
+
+</div>
+
+
 <div class="content" >
 
 
+    <br>
+    <br>
+    <br>
 
 
-
-
-
-
-<h3 class="center grey-text">FEED</h3>
     <div class="right">
-        <a href="/create"class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></a>
+        <button onclick="window.location.href='/create'" class="">Create New Invite</button>
     </div>
-
+{{#if data.created}}
+<h3 class="center" style="font-size: 5em;">Invites Created</h3>
 
 
 
@@ -40,16 +60,21 @@
         <div class="card-content">
 
 <div class="card-info">
-{{this.created_at}}
+    <h2><u>ACCEPTED BY: </u>{{this.count}}</h2>
+    <small style="position: absolute;right: 0px;">
+    <strong>CREATED AT:&nbsp </strong>{{this.created_at}}</small>
+    <br>
 </div>
         <h1 class="center">
-    {{this.heading}}
+            <br>
+            <br>
+            {{{this.heading}}}
         </h1>
             <div class="invite-content center">
-    {{this.content}}
+                {{{this.content}}}
             </div>
-<div class="card-foot">
-    {{this.footer}}
+<div class="card-foot center">
+    {{{this.footer}}}
 </div>
 
 
@@ -58,29 +83,45 @@
 {{/each}}
 
 
+
+
+
+
+
     <hr>
-    <hr>
-    <hr>
+        {{/if}}
+
+    {{#if data.accepted}}
+
+    <h3 class="center" style="font-size: 5em;">Invites Accepted</h3>
+
+
 
 {{#each data.accepted}}
 
 
 
-    <div class="card">
+    <div class="card accepted">
         <div class="card-content">
 
             <div class="card-info">
-                {{this.created_at}}
+                <h2>HOSTED BY:            <u>    {{this.name}}</u>
+                </h2>
+                <small style="position: absolute;right: 0px;">
+                    <strong>EVENT AT:&nbsp </strong>{{this.event_at}}</small>
+                <br>
             </div>
             <h1 class="center">
-                {{this.heading}}
+                <br>
+                <br>
+                {{{this.heading}}}
             </h1>
-            <div class="invite-content" class="center">
-                {{this.content}}
+            <div class="invite-content center">
+                {{{this.content}}}
             </div>
-            <div class="card-foot">
+            <div class="card-foot center">
 <!--                <footer>-->
-                {{this.footer}}
+                {{{this.footer}}}
 <!--                </footer>-->
             </div>
 
@@ -106,6 +147,14 @@
 
 
 {{/each}}
+    {{/if}}
+
+
+
+
+
+
+
 
 </div>
 
