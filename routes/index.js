@@ -57,9 +57,10 @@ router.get('/search',authenticationMiddleware(), function(req, res, next) {
 
 
 router.get('/create',authenticationMiddleware(), function(req, res, next) {
+    profileid=req.session.user
     const db=require('../db.js')
 
-    db.query("SELECT name,id  FROM users", function (error, results, fields) {
+    db.query("SELECT name,id  FROM users WHERE id!=(?)",[profileid], function (error, results, fields) {
         if (error) {
             console.log(error, 'dbquery');
         }
@@ -117,13 +118,13 @@ router.post('/create',authenticationMiddleware (), function(req, res, next) {
                 console.log(error,'dbquery');
             }
             console.log("success")
-            db.query("SELECT LAST_INSERT_ID() as user_id",  function (error, last, fields) {
+            db.query("SELECT * FROM invites",  function (error, last, fields) {
                 if (error) {
                     console.log(error,'dbquery');
                 }
-                console.log(last)
+                l=last.pop()
 
-                res.render('link',{last:last})
+                res.render('link',{last:l})
 
 
 
