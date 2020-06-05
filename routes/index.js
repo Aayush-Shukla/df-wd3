@@ -356,13 +356,14 @@ router.post('/register', check('username').not().isEmpty().withMessage('name can
                         console.log(error,'dbquery');
                     }
 
-                    db.query('SELECT LAST_INSERT_ID() as user_id',function(error,results,fields){
+                    db.query('SELECT LAST_INSERT_ID() as user',function(error,results,fields){
                         if(error) {
                             console.log(error)
                         }
                         console.log(results,"sssssssssssssssssssssssssssssss")
-                        // const user_id=results[0]
+                        const user=results[0].user
                         // req.session.user =  user_id;
+                        req.session.user =  user
                         res.redirect('/')
                     })
 
