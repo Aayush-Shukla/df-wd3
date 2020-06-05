@@ -9,7 +9,7 @@ var connection = mysql.createConnection({
 	
   insecureAuth : true
   
-})
+});
 
 connection.connect(function(err) {
   if (err) {
@@ -26,69 +26,37 @@ connection.connect(function(err) {
 
 
 
-connection.query(`CREATE TABLE IF NOT EXISTS followers (id bigint(20) NOT NULL, user_id bigint(20) NOT NULL, follower_id bigint(20) NOT NULL); `, function (error,results, fields) { if (error) throw error;  
+connection.query(`CREATE TABLE accepted (invite_id int NOT NULL,user int DEFAULT NULL,bool tinyint DEFAULT NULL,number int NOT NULL AUTO_INCREMENT,PRIMARY KEY (number)) `, function (error,results, fields) {
+  if (error) throw error+"   1111111111111111111111111";
 });
 
-connection.query(`CREATE TABLE IF NOT EXISTS followings ( id bigint(20) NOT NULL, user_id bigint(20) NOT NULL, following_id bigint(20) NOT NULL)`, function (error, results, fields) {
-  if (error) throw error;
+connection.query(`CREATE TABLE invites (invite_id int NOT NULL AUTO_INCREMENT,author_id int DEFAULT NULL,heading varchar(100) DEFAULT NULL,content varchar(400) DEFAULT NULL,footer varchar(100) DEFAULT NULL,eligiblemem json DEFAULT NULL,created_at datetime DEFAULT CURRENT_TIMESTAMP,link varchar(45) DEFAULT NULL,event_at datetime DEFAULT NULL,inviteall tinyint DEFAULT NULL,PRIMARY KEY (invite_id),UNIQUE KEY invite_id_UNIQUE (invite_id))`, function (error, results, fields) {
+  if (error) throw error+"   2222222222222222222222";
   
 });
 
-connection.query(`CREATE TABLE IF NOT EXISTS post (  id bigint(20) UNSIGNED NOT NULL, author_id bigint(20) NOT NULL, created_at datetime DEFAULT CURRENT_TIMESTAMP,content text COLLATE utf8mb4_general_ci NOT NULL)`, function (error, results, fields) {
-  if (error) throw error;
+connection.query(`CREATE TABLE users (id int unsigned NOT NULL AUTO_INCREMENT,name varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,email varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,pass varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,PRIMARY KEY (id),UNIQUE KEY id (id))`, function (error, results, fields) {
+  if (error) throw error+"   333333333333333333333";
   
 });
 
-connection.query(`CREATE TABLE IF NOT EXISTS users ( id int(10) UNSIGNED NOT NULL, name varchar(30) COLLATE utf8mb4_general_ci NOT NULL, email varchar(100) COLLATE utf8mb4_general_ci NOT NULL, pass varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL)`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
+// connection.query(`ALTER TABLE accepted ADD PRIMARY KEY (number)`, function (error, results, fields) {
+//   if (error) throw error;
+//
+// });
+
+// connection.query(`ALTER TABLE invites ADD PRIMARY KEY (number)`, function (error, results, fields) {
+//   if (error) throw error;
+//
+// });
+//
+// connection.query(`ALTER TABLE accepted ADD PRIMARY KEY (number)`, function (error, results, fields) {
+//   if (error) throw error;
+//
+// });
 
 
-connection.query(`ALTER TABLE followers ADD PRIMARY KEY (id)`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-
-connection.query(`ALTER TABLE followings ADD PRIMARY KEY (id)`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-connection.query(`ALTER TABLE post ADD PRIMARY KEY (id)`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-connection.query(`ALTER TABLE users ADD PRIMARY KEY (id),  ADD UNIQUE KEY id (id)`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-connection.query(`ALTER TABLE followers MODIFY id bigint(20) NOT NULL AUTO_INCREMENT`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-connection.query(`ALTER TABLE followings MODIFY id bigint(20) NOT NULL AUTO_INCREMENT`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-connection.query(`ALTER TABLE post MODIFY id bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-connection.query(`ALTER TABLE users MODIFY id int(10) UNSIGNED NOT NULL AUTO_INCREMENT`, function (error, results, fields) {
-  if (error) throw error;
-  
-});
-
-
-
-console.log("All Table Created Successfuly")
+console.log("All Table Created Successfully")
 
 
 

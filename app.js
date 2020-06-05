@@ -4,11 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
+// var expressValidator = require('express-validator');
 
 var session=require('express-session')
-var passport=require('passport');
-var LocalStrategy = require('passport-local').Strategy;
+
 var MySQLStore=require('express-mysql-session')(session);
 var bcrypt=require('bcrypt');
 
@@ -60,36 +59,7 @@ app.use(function(req,res,next){
 app.use('/', index);
 app.use('/users', users);
 
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        console.log(username)
-        console.log(password)
-      const db=require('./db');
-        db.query('SELECT id,pass FROM users WHERE name=?',[username],function(err,results,fields){
-          if(err){
-            done(err)
-          }
-          if(results.length===0){
-            done(null,false);
-          }
-          else {
 
-            const hash = results[0].pass.toString();
-            bcrypt.compare(password, hash, function (err, response) {
-
-              if (response === true) {
-                return done(null, {user_id: results[0].id});
-
-              } else {
-                return done(null, false);
-              }
-            })
-          }
-
-        })
-    }
-
-));
 
 
 // catch 404 and forward to error handler

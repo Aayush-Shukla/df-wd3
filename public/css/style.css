@@ -7,6 +7,7 @@ body {
   color: #404040;
   background: lightgrey;
   width: 100%;
+  margin: 0px;
 }
 
 
@@ -15,14 +16,15 @@ ul.nav {
   padding:0;
   width: 100%;
   list-style:none;
-  height:36px; line-height:36px;
-  background:#0d7963;
+  height:50px;
+  line-height:50px;
+  background:darkcyan;
   font-family:Arial, Helvetica, sans-serif;
   font-size:13px;
 }
 ul.nav li {
-  border-right:1px solid #189b80;
-  float:left;
+  border-right:1px solid grey;
+  float:right;
 }
 ul.nav a {
   display:block;
@@ -298,13 +300,11 @@ input[type=text], input[type=password], input[type=email] {
   width: 200px;
   height: 34px;
   color: #404040;
-  background: white;
-  border: 1px solid;
-  border-color: #c4c4c4 #d1d1d1 #d4d4d4;
+  background: whitesmoke;
+
   border-radius: 2px;
 
 
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 

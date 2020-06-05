@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 
-const { check, validationResult } = require('express-validator');
 var bcrypt=require('bcrypt');
 const saltRounds=10;
 
@@ -152,10 +151,17 @@ router.get('/invite/:link',authenticationMiddleware (), function(req, res, next)
         var a=JSON.parse(s)
         // console.log(n,a[0])
         var i;
-        for (i = 0; i < a.length; i++) {
-            if (a[i] === n) {
-                return true;
+        try{
+            for (i = 0; i < a.length; i++) {
+                if (a[i] === n) {
+                    return true;
+                }
             }
+        }
+
+
+        catch{
+            return false;
         }
 
         return false;
@@ -333,7 +339,7 @@ router.get('/logout', function(req, res, next) {
 
 
 
-router.post('/register', check('username').not().isEmpty().withMessage('name cant be empty'),function(req, res, next) {
+router.post('/register',function(req, res, next) {
 
     exist=[]
     username=req.body.username
