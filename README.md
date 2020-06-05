@@ -45,8 +45,8 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 
 ## Install
 
-    $ git clone https://github.com/Aayush-Shukla/sop--wd3
-    $ cd sop--w3
+    $ git clone https://github.com/Aayush-Shukla/df-wd3
+    $ cd df-w3
     $ yarn install
 
 ## Configure app
@@ -87,8 +87,10 @@ Run SQL query
 
 ## TODO
 - [x] Account sign-up and login page
-- [x] Article page for creating articles
-- [x] Feed Page
-- [x] Profile page with user's detail
-- [x] Search by username and view/follow other users
-- [ ] Advance Task
+- [x] Page for creation of simple text based invites
+- [x] Creation of dynamic links for invitation
+- [x] Page to accept / reject invitations
+- [x] Support for private events
+- [x] Dashboard for a user to view events they have created and invitations they have accepted
+- [ ] Hacker mode
+- [ ] Hacker++ mode
