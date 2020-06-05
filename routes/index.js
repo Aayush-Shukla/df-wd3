@@ -26,7 +26,7 @@ router.get('/',authenticationMiddleware (), function(req, res, next) {
                 console.log(error, 'dbquery');
             }
 
-            db.query("SELECT substring(heading,1,25) as heading,link FROM invites where eligiblemem LIKE '%\"?\"%' AND event_at > NOW() AND author_id !=(?)",[profileid,profileid], function (error, available, fields) {
+            db.query("SELECT substring(heading,1,25) as heading,link FROM invites where (eligiblemem LIKE '%\"?\"%' OR inviteall=TRUE) AND event_at > NOW() AND author_id !=(?)",[profileid,profileid], function (error, available, fields) {
                 if (error) {
                     console.log(error, 'dbquery');
                 }
@@ -51,9 +51,7 @@ router.get('/register',checkNotAuthenticated(), function(req, res, next) {
   res.render('register', { title: 'Registration' });
 });
 
-router.get('/search',authenticationMiddleware(), function(req, res, next) {
-  res.render('search', { title: 'Registration' });
-});
+
 
 
 router.get('/create',authenticationMiddleware(), function(req, res, next) {
@@ -70,34 +68,6 @@ router.get('/create',authenticationMiddleware(), function(req, res, next) {
     })
 });
 
-router.get('/profile',authenticationMiddleware (), function(req, res, next) {
-    authorid=req.session.user
-
-    const db=require('../db.js')
-    db.query("SELECT * FROM post WHERE author_id =(?) ORDER BY created_at DESC", [authorid], function (error, results, fields) {
-        if (error) {
-            console.log(error, 'dbquery');
-        }
-        db.query("SELECT (Select count(*) from post where author_id=(?))as postno, (SELECT count(*) from followings where user_id=(?))as followers,(SELECT count(*) from followers where user_id=(?))as followings,(select name from users where id=(?))as name", [authorid,authorid,authorid,authorid], function (error, profinfo, fields) {
-            if (error) {
-                console.log(error, 'dbquery');
-            }
-                console.log(results)
-            db.query("SELECT * FROM users WHERE id =(?) ", [authorid], function (error, userdetail, fields) {
-                if (error) {
-                    console.log(error, 'dbquery');
-                }
-                console.log(userdetail[0])
-
-                res.render('profile', {data: {userblogs: results, info: profinfo[0],userinfo: userdetail[0]}})
-            })
-        })
-    })
-
-
-
-
-});
 router.post('/create',authenticationMiddleware (), function(req, res, next) {
 
 
@@ -106,14 +76,22 @@ router.post('/create',authenticationMiddleware (), function(req, res, next) {
     content=req.body.content
     footer=req.body.footer
     authorid=req.session.user
-
+    everyone=req.body.custominvite
+    if(everyone!=undefined){
+        inviteall=true;
+    }
+    else{
+        inviteall=false;
+    }
     members=JSON.stringify(req.body.check)
     link=Math.random().toString(36).substring(2,7)
+    console.log(inviteall,"skjdhkfjhskj")
+
     console.log(time,'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh')
 
     const db=require('../db.js')
 
-        db.query("INSERT INTO invites(author_id,heading,content,footer,eligiblemem,link,event_at)VALUES(?,?,?,?,?,?,?)", [authorid, heading,content,footer,members,link,time], function (error, results, fields) {
+        db.query("INSERT INTO invites(author_id,heading,content,footer,eligiblemem,link,event_at,inviteall)VALUES(?,?,?,?,?,?,?,?)", [authorid, heading,content,footer,members,link,time,inviteall], function (error, results, fields) {
             if (error) {
                 console.log(error,'dbquery');
             }
@@ -156,7 +134,9 @@ router.get('/invite/:link',authenticationMiddleware (), function(req, res, next)
             console.log(error, 'dbquery');
         }
         // console.log(profileid[0].id)
-        if(results.length!=0 && strtoarr(currentuser,results[0].eligiblemem) ) {
+        console.log(results[0].inviteall,"sds")
+
+        if(results.length!=0 && (strtoarr(currentuser,results[0].eligiblemem) || results[0].inviteall==1) ) {
             console.log(results,"sds")
             res.render('invite',{invite:results[0]})
         }
@@ -280,73 +260,13 @@ router.get('/reject/:id',authenticationMiddleware (), function(req, res, next) {
 
 
 
-router.get('/follow/:id',authenticationMiddleware (), function(req, res, next) {
-
-    const db=require('../db.js')
-    userid=req.session.user
-    tofollow=req.params.id
-    db.query("INSERT INTO followings(following_id,user_id)VALUES (?,?)", [userid,tofollow], function (error, results, fields) {
-        if (error) {
-            console.log(error, 'dbquery');
-        }
-        console.log(results)
-    })
-        db.query("INSERT INTO followers(follower_id,user_id)VALUES(?,?)", [tofollow,userid], function (error, results, fields) {
-        if (error) {
-            console.log(error, 'dbquery');
-        }
-        console.log(results)
-    })
-
-    db.query("SELECT name FROM users WHERE id=(?)", [tofollow], function (error, results, fields) {
-        if (error) {
-            console.log(error, 'dbquery');
-        }
-        var redirect=results[0].name
-        console.log(redirect)
-        res.redirect(`/user/${redirect}`);
-
-    })
-
-
-
-});
 
 
 
 
 
-router.get('/unfollow/:id',authenticationMiddleware (), function(req, res, next) {
-
-    const db=require('../db.js')
-    userid=req.session.user
-    tofollow=req.params.id
-    db.query("DELETE FROM followings WHERE following_id=(?) AND user_id=(?)", [userid,tofollow], function (error, results, fields) {
-        if (error) {
-            console.log(error, 'dbquery');
-        }
-        console.log(results)
-    })
-    db.query("DELETE FROM followers WHERE follower_id=(?) AND user_id=(?)", [tofollow,userid], function (error, results, fields) {
-        if (error) {
-            console.log(error, 'dbquery');
-        }
-        console.log(results,'del')
-    })
-
-    db.query("SELECT name FROM users WHERE id=(?)", [tofollow], function (error, results, fields) {
-        if (error) {
-            console.log(error, 'dbquery');
-        }
-        var redirect=results[0].name
-        console.log(redirect)
-        res.redirect(`/user/${redirect}`);
-
-    })
 
 
-
-});
 
 
 
@@ -476,11 +396,7 @@ router.post('/register', check('username').not().isEmpty().withMessage('name can
 
 
 
-router.post('/search',authenticationMiddleware (), function(req, res, next) {
 
-
-
-});
 
 
 
