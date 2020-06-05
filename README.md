@@ -1,6 +1,6 @@
-# Social Website 
+# Invitation site 
 
-A simple blog site built using Node js and Express js for the backend.
+A invitation site site built using Node js and Express js for the backend.
 
 ---
 ## Requirements
