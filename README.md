@@ -46,7 +46,7 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 ## Install
 
     $ git clone https://github.com/Aayush-Shukla/df-wd3
-    $ cd df-w3
+    $ cd df-wd3
     $ yarn install
 
 ## Configure app
